@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .error-message p {
+            margin: 0;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Job Application</h2>
+        <form action="#" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                {{form.name}}
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                {{form.email}}
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                {{form.phone}}
+            </div>
+
+            <div class="form-group">
+                <label for="position">Position Applied For</label>
+                {{form.position}}
+            </div>
+
+            <div class="form-group">
+                <label for="cv">Upload Resume (PDF)</label>
+                {{form.cv}}
+            </div>
+
+            {% comment %} <div class="form-group">
+                <label for="photo">Upload Photo</label>
+                {{form.photo}}
+            </div> {% endcomment %}
+
+
+            <div class="form-group">
+                <button type="submit">Submit Application</button>
+                {% if form.cv.errors %}
+                    <div class="error-message">
+                        {% for error in form.cv.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
