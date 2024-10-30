@@ -1,14 +1,15 @@
 from django import forms
-from .models import JobApplication  
+from .models import JobApplication
 from magika import Magika
 from django.core.exceptions import ValidationError
 from .validator import FileUploadValidator
 
+
 class ApplyModelForm(forms.ModelForm):
     class Meta:
         model = JobApplication
-        fields = ('name', 'email', 'phone', 'position', 'cv')
-    
+        fields = ("name", "email", "phone", "position", "cv", "selcuk", "emre")
+
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     # Dosya boyutu ve uzantı sınırlarını belirleyin
