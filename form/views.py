@@ -14,7 +14,7 @@ def job_application_form(request):
         form = ApplyModelForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return render(request, 'home.html')  # index.html adında bir şablona yönlendirir
     else:
         form = ApplyModelForm()
 
