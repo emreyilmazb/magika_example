@@ -8,18 +8,18 @@ from .validator import FileUploadValidator
 class ApplyModelForm(forms.ModelForm):
     class Meta:
         model = JobApplication
-        fields = ('name', 'email', 'phone', 'position', 'cv')
-    
+        fields = ("name", "email", "phone", "position", "cv")
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Dosya boyutu ve uzantı sınırlarını belirleyin
         self.file_validator = FileUploadValidator(
-            allowed_extensions=['png', 'jpg', 'jpeg', 'pdf'],
-            max_size=2 * 1024 * 1024  # 2 MB
+            allowed_extensions=["png", "jpg", "jpeg", "pdf"],
+            max_size=2 * 1024 * 1024,  # 2 MB
         )
 
     def clean_cv(self):
-        file = self.cleaned_data.get('cv')
+        file = self.cleaned_data.get("cv")
         if file:
             try:
                 self.file_validator(file)
