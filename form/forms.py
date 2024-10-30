@@ -8,7 +8,7 @@ from .validator import FileUploadValidator
 class ApplyModelForm(forms.ModelForm):
     class Meta:
         model = JobApplication
-        fields = ("name", "email", "phone", "position", "cv", "selcuk")
+        fields = ("name", "email", "phone", "position", "cv", "selcuk", "kubra")
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
