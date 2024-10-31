@@ -5,7 +5,7 @@ from ..validator import FileUploadValidator
 
 
 class JobApplicationSerializer(serializers.ModelSerializer):
-    cv = serializers.FileField(validators=[FileUploadValidator()])
+    cv = serializers.FileField(validators=[FileUploadValidator(allowed_extensions=['pdf'])])
 
     class Meta:
         model = JobApplication

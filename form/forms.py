@@ -31,15 +31,15 @@ class ApplyModelForm(forms.ModelForm):
                 raise ValidationError(e.messages)
         return file
 
-    # def clean_photo(self):
-    #     photo = self.cleaned_data['photo']
+    def clean_photo(self):
+        photo = self.cleaned_data['photo']
 
-    #     # Magika kullanarak fotoğrafın türünü kontrol et
-    #     magika = Magika()
-    #     magika.load()
-    #     photo_bytes = photo.read()
-    #     result = magika.identify_bytes(photo_bytes)
+        # Magika kullanarak fotoğrafın türünü kontrol et
+        magika = Magika()
+        magika.load()
+        photo_bytes = photo.read()
+        result = magika.identify_bytes(photo_bytes)
 
-    #     if result.output.label not in ['jpeg', 'png']:
-    #         raise forms.ValidationError("Sadece JPEG veya PNG formatında fotoğraf kabul edilir.")
-    #     return photo
+        if result.output.label not in ['jpeg', 'png']:
+            raise forms.ValidationError("Sadece JPEG veya PNG formatında fotoğraf kabul edilir.")
+        return photo
