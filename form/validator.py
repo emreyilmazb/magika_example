@@ -65,12 +65,13 @@ class FileUploadValidator:
         # Uploaded files extension
         file_extension = file.name.split('.')[-1].lower()
         file_mime_type = self.mime_type_mapping.get(file_extension, None)
-
+        print('yaml: ', file_mime_type)
         # file_mime_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         # exact_mime_type = "application/pdf"
         # exact_extension = "pdf"
         
         result = self.magika.identify_bytes(content)
+        print('output: ', result.output)
         exact_mime_type = result.output.mime_type
         exact_extension = result.output.ct_label
         # Check if the MIME type matches the expected type and the extension is allowed
