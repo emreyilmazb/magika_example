@@ -8,13 +8,17 @@ from .validator import FileUploadValidator
 class ApplyModelForm(forms.ModelForm):
     class Meta:
         model = JobApplication
-        fields = ("name", "email", "phone", "position", "cv")
+        fields = ("name", "email", "phone", "position", "cv", "photo")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Dosya boyutu ve uzantı sınırlarını belirleyin
-        self.file_validator = FileUploadValidator(
-            allowed_extensions=["png", "jpg", "jpeg", "pdf"],
+        self.pdf_file_validator = FileUploadValidator(
+            allowed_extensions=["pdf"],
+            max_size=2 * 1024 * 1024,  # 2 MB
+        )
+        self.photo_file_validator = FileUploadValidator(
+            allowed_extensions=["png", "jpg", "jpeg"],
             max_size=2 * 1024 * 1024,  # 2 MB
         )
 
@@ -22,24 +26,16 @@ class ApplyModelForm(forms.ModelForm):
         file = self.cleaned_data.get("cv")
         if file:
             try:
-                response = self.file_validator(file)
-                if response.ct_label != "pdf":
-                    raise ValidationError(
-                        {"cv": ["Yalnızca PDF dosyalarına izin verilmektedir."]}
-                    )
+                self.pdf_file_validator(file)
             except ValidationError as e:
                 raise ValidationError(e.messages)
         return file
 
     def clean_photo(self):
         photo = self.cleaned_data['photo']
-
-        # Magika kullanarak fotoğrafın türünü kontrol et
-        magika = Magika()
-        magika.load()
-        photo_bytes = photo.read()
-        result = magika.identify_bytes(photo_bytes)
-
-        if result.output.label not in ['jpeg', 'png']:
-            raise forms.ValidationError("Sadece JPEG veya PNG formatında fotoğraf kabul edilir.")
+        if photo:
+            try:
+                self.photo_file_validator(photo)
+            except ValidationError as e:
+                raise ValidationError (e.message) 
         return photo
