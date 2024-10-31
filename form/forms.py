@@ -22,7 +22,11 @@ class ApplyModelForm(forms.ModelForm):
         file = self.cleaned_data.get("cv")
         if file:
             try:
-                self.file_validator(file)
+                response = self.file_validator(file)
+                if response.ct_label != "pdf":
+                    raise ValidationError(
+                        {"cv": ["Yalnızca PDF dosyalarına izin verilmektedir."]}
+                    )
             except ValidationError as e:
                 raise ValidationError(e.messages)
         return file
